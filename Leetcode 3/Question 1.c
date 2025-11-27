@@ -1,1 +1,34 @@
+#include <stdio.h>
+#include <string.h>
 
+int isVowel(char c) {
+    return (c=='a' || c=='e' || c=='i' || c=='o' || c=='u' ||
+            c=='A' || c=='E' || c=='I' || c=='O' || c=='U');
+}
+
+int main() {
+    char s[100];
+    fgets(s, sizeof(s), stdin);
+    s[strcspn(s, "\n")] = 0;
+
+    int left = 0;
+    int right = strlen(s) - 1;
+
+    while (left < right) {
+        while (left < right && !isVowel(s[left]))
+            left++;
+
+        while (left < right && !isVowel(s[right]))
+            right--;
+
+        char temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
+
+        left++;
+        right--;
+    }
+
+    printf("%s", s);
+    return 0;
+}
